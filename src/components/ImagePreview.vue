@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watch, onMounted } from 'vue';
+    import { ref, watch, onMounted, nextTick } from 'vue';
     import { useFileStore } from './../stores/file';
     import { useSettingStore } from './../stores/settings';
 
@@ -10,12 +10,20 @@
     const preview = ref(null);
     const grayRamp = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,"^`\'. ';
     const rampLength = grayRamp.length;
+    const canvasStyle = ref({});
 
     onMounted(() => {
         context.value = canvas.value.getContext("2d");
     });
 
     watch(fileStore, () => readSelectedFile());
+
+    watch(settingStore, () => {
+        canvasStyle.value = {
+            width: `${preview.value.offsetWidth}px`,
+            height: `${preview.value.offsetHeight}px`,
+        }
+    })
 
     const readSelectedFile = () => {
         const file = fileStore.file;
@@ -120,8 +128,8 @@
 
 <template>
     <div class="preview-container">
-        <pre ref="preview"></pre>
-        <canvas ref="canvas"></canvas>
+        <pre ref="preview" v-show="settingStore.asciiVisibility" :style="settingStore.getStyles"></pre>
+        <canvas ref="canvas" v-show="settingStore.imageVisibility" :style="canvasStyle"></canvas>
     </div>
 </template>
 
@@ -135,7 +143,6 @@ pre {
 canvas {
     position: absolute;
     z-index: 1;
-    display: none;
 }
 
 .preview-container {
