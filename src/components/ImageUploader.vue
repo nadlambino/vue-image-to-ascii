@@ -1,10 +1,10 @@
-<script setup>
+<script setup lang="ts">
     import { ref, watch } from 'vue';
     import { useFileStore } from './../stores/file';
     import { useSettingStore } from './../stores/settings';
 
-    const fileSelector = ref(null);
-    const file = ref(null);
+    const fileSelector : any = ref(null);
+    const file : any = ref(null);
     const fileStore = useFileStore();
     const settingStore = useSettingStore();
 
@@ -12,11 +12,11 @@
         fileSelector.value.click();
     }
 
-    const handleFileSelect = (e) => {
+    const handleFileSelect = (e : any) => {
         file.value = e.target.files[0];
     }
 
-    const handleDrop = (e) => {
+    const handleDrop = (e : any) => {
         if (e.dataTransfer.items) {
             const item = e.dataTransfer.items[0];
             if (item.kind === 'file') {

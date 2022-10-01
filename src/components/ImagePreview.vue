@@ -1,13 +1,13 @@
-<script setup>
-    import { ref, watch, onMounted, nextTick } from 'vue';
+<script setup lang="ts">
+    import { ref, watch, onMounted } from 'vue';
     import { useFileStore } from './../stores/file';
     import { useSettingStore } from './../stores/settings';
 
     const fileStore = useFileStore();
     const settingStore = useSettingStore();
-    const canvas = ref(null);
-    const context = ref(null);
-    const preview = ref(null);
+    const canvas : any = ref(null);
+    const context : any = ref(null);
+    const preview : any = ref(null);
     const grayRamp = '$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/|()1{}[]?-_+~<>i!lI;:,"^`\'. ';
     const rampLength = grayRamp.length;
     const canvasStyle = ref({});
@@ -47,13 +47,15 @@
                 drawAscii(grayScales, width);
             }
 
-            image.src = event.target.result;
+            if (event && event.target && event.target.result) {
+                image.src = event.target.result as string;
+            }
         };
 
         reader.readAsDataURL(file);
     }
 
-    const clampDimensions = (width, height) => {
+    const clampDimensions = (width : number, height : number) => {
         const rectifiedWidth = Math.floor(getFontRatio() * width);
 
         if (height > settingStore.maxHeight) {
@@ -81,7 +83,7 @@
         return height / width;
     };
 
-    const convertToGrayScales = (width, height) => {
+    const convertToGrayScales = (width : number, height : number) => {
         const imageData = context.value.getImageData(0, 0, width, height);
         const grayScales = [];
 
@@ -101,12 +103,12 @@
         return grayScales;
     };
 
-    const toGrayScale = (r, g, b) => {
+    const toGrayScale = (r : any, g : any, b : any) => {
         return 0.21 * r + 0.72 * g + 0.07 * b
     };
 
-    const drawAscii = (grayScales, width) => {
-        const ascii = grayScales.reduce((asciiImage, grayScale, index) => {
+    const drawAscii = (grayScales : any, width : number) => {
+        const ascii = grayScales.reduce((asciiImage : any, grayScale : any, index : any) => {
             let nextChars = getCharacterForGrayScale(grayScale);
             if ((index + 1) % width === 0) {
                 nextChars += '\n';
@@ -121,7 +123,7 @@
         canvas.value.style.height = `${preview.value.offsetHeight}px`;
     };
     
-    const getCharacterForGrayScale = grayScale => {
+    const getCharacterForGrayScale = (grayScale : any) => {
         return grayRamp[Math.ceil((rampLength - 1) * grayScale / 255)];
     };
 </script>
