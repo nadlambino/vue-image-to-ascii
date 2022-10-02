@@ -28,6 +28,10 @@
 <template>
     <header>
         <div class="menu-item">
+            <small>Choose Image</small>
+            <button type="button" class="button" @click="settingStore.setOpenFileSelector(true)">Select File</button>
+        </div>
+        <div class="menu-item">
             <small>Image</small>
             <label class="switch">
                 <input type="checkbox" class="toggle" v-model="showImageToggle">
@@ -136,5 +140,11 @@ input.toggle:checked + .slider:before {
     -ms-transform: translateX(14px);
     transform: translateX(14px);
 }
-
+.button {
+    background-color: #2196F3;
+    border: 1px solid #1d80d1;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
 </style>

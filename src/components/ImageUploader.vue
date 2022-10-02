@@ -33,7 +33,14 @@
         }
 
         fileStore.setFile(file.value);
-        settingStore.toggleDropzoneVisibility();
+        settingStore.setDropzoneVisibility(false);
+        settingStore.setOpenFileSelector(false);
+    });
+
+    watch(settingStore, () => {
+        if (settingStore.openFileSelector === true) {
+            openFileSelector();
+        }
     })
 </script>
 

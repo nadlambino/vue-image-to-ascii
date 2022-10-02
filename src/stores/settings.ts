@@ -9,9 +9,14 @@ export const useSettingStore = defineStore('settings', () => {
     const asciiVisibility = ref(true);
     const fontSize = ref(5.0);
     const lineHeight = ref(1.0);
+    const openFileSelector = ref(false);
 
     const toggleDropzoneVisibility = () => {
         dropzoneVisibility.value = !dropzoneVisibility.value;
+    }
+
+    const setDropzoneVisibility = (value: boolean) => {
+        dropzoneVisibility.value = value;
     }
 
     const setImageVisibility = (value: boolean) => {
@@ -30,6 +35,10 @@ export const useSettingStore = defineStore('settings', () => {
         lineHeight.value = value;
     }
 
+    const setOpenFileSelector = (value: boolean) => {
+        openFileSelector.value = value;
+    }
+
     const getStyles = computed(() => {
         return {
             'font-size'     : `${fontSize.value}px`,
@@ -45,11 +54,13 @@ export const useSettingStore = defineStore('settings', () => {
         dropzoneVisibility,
         fontSize,
         lineHeight,
-        toggleDropzoneVisibility, 
+        openFileSelector,
+        setDropzoneVisibility, 
         setImageVisibility,
         setAsciiVisibility,
         setFontSize,
         setLineHeight,
+        setOpenFileSelector,
         getStyles
     }
 })
