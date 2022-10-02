@@ -31,7 +31,7 @@
     onMounted(() => {
         document.addEventListener('click', (e : any) => {
             e.stopPropagation();
-            const box : any = document.getElementById('header');
+            const box : any = document.getElementById('menu');
             if (!box.contains(e.target)) {
                 isBackgroundColorSwatchVisible.value = false;
                 isFontColorSwatchVisible.value = false;
@@ -69,7 +69,7 @@
 </script>
 
 <template>
-    <header id="header">
+    <div id="menu">
         <div class="menu-item">
             <button type="button" class="button" @click="openFileSelector">Select</button>
         </div>
@@ -82,7 +82,7 @@
                 :style="{backgroundColor: settingStore.fontColor}">
             </button>
             <ColorPicker
-                class="font-color-picker"
+                class="color-picker"
                 v-show="isFontColorSwatchVisible"
                 theme="light"
                 :color="settingStore.fontColor"
@@ -96,7 +96,7 @@
                 :style="{backgroundColor: settingStore.backgroundColor}">
             </button>
             <ColorPicker
-                class="font-color-picker"
+                class="color-picker"
                 v-show="isBackgroundColorSwatchVisible"
                 theme="light"
                 :color="settingStore.backgroundColor"
@@ -126,33 +126,15 @@
             <small>Line Height</small>
             <input type="number" class="input" v-model="lineHeight" />
         </div>
-    </header>    
+    </div>    
 </template>
 
 <style scoped>
-.font-color-picker {
-    position: absolute;
-    top: 70px;
-    min-width: 217px;
-}
 .swatch-button {
     width: 21px;
     height: 21px;
     border: 1px solid #dddddd;
     border-radius: 3px;
-}
-header {
-    display: flex;
-    gap: 15px;
-    justify-content: center;
-    align-items: flex-end;
-    padding: 10px;
-    border-bottom: 1px solid #dddddd;
-    margin-bottom: 10px;
-    width: 100%;
-    z-index: 100;
-    position: fixed;
-    background-color: #fff;
 }
 .menu-item {
     display: flex;

@@ -8,8 +8,53 @@
     width: 100vw;
     height: 100%;
     gap: 10px;
+    padding: 10px;
 }
 
 .button:hover {
     background-color: #44a6f7;
+}
+#menu {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+    width: 100%;
+    z-index: 100;
+    position: fixed;
+    background-color: #fff;
+}
+.color-picker {
+    position: absolute;
+    min-width: 217px;
+    border: 1px solid #dddddd;
+    box-shadow: none !important;
+}
+
+.hu-color-picker .colors {
+    display: none;
+}
+
+@media only screen and (max-width: 991.8px) {
+    #menu {
+        border-top: 1px solid #dddddd;
+        margin-top: 10px;
+        bottom: 0;
+    }
+    .color-picker {
+        bottom: 85%;
+    }
+}
+
+@media only screen and (min-width: 992px) {
+    #menu {
+        border-bottom: 1px solid #dddddd;
+        margin-bottom: 10px;
+        top: 0;
+    }
+    .color-picker {
+        top: 95%;
+    }
 }
