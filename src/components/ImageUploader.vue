@@ -71,10 +71,10 @@
 }
 .dropzone:hover, .active-dropzone {
     cursor: pointer;
-    border-color: rgb(35, 127, 212);
+    border-color: #1d80d1;
 }
 .dropzone:hover .drag-and-drop-text, .dropzone:hover .file-selector-text, .active-dropzone .drag-and-drop-text, .active-dropzone .file-selector-text {
-    color: rgb(35, 127, 212);
+    color: #1d80d1;
 }
 .dropzone p {
     font-size: 24px !important;
