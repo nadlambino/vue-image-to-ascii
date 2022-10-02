@@ -9,8 +9,8 @@
     height: 100%;
     gap: 10px;
     padding: 10px;
+    overflow: scroll;
 }
-
 .button:hover {
     background-color: #44a6f7;
 }
@@ -21,7 +21,7 @@
     justify-content: center;
     align-items: flex-end;
     padding: 10px;
-    width: 100%;
+    width: 100vw;
     z-index: 100;
     position: fixed;
     background-color: #fff;
@@ -32,16 +32,26 @@
     border: 1px solid #dddddd;
     box-shadow: none !important;
 }
-
 .hu-color-picker .colors {
     display: none;
 }
-
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: #696969; 
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #696969; 
+}
 @media only screen and (max-width: 991.8px) {
     #menu {
         border-top: 1px solid #dddddd;
         margin-top: 10px;
         bottom: 0;
+        position: fixed;
     }
     .color-picker {
         bottom: 85%;
