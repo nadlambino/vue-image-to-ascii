@@ -45,7 +45,7 @@
 </script>
 
 <template>
-    <div class="dropzone" @click="openFileSelector" @dragover.prevent.stop @drop.prevent.stop="handleDrop" v-show="settingStore.dropzoneVisibility">
+    <div class="dropzone" id="dropzone" @click="openFileSelector" @dragover.prevent.stop @drop.prevent.stop="handleDrop" v-show="settingStore.dropzoneVisibility">
         <input 
             @change="handleFileSelect"
             ref="fileSelector"
@@ -77,12 +77,12 @@
     color: rgb(35, 127, 212);
 }
 .dropzone p {
-    font-size: 32px;
+    font-size: 24px !important;
     color: rgb(82, 81, 81);
 }
 .dropzone small {
-    font-size: 18px;
+    font-size: 14px !important;
     color: rgb(82, 81, 81);
-    margin-top: 5px;
+    margin-top: 8px;
 }
 </style>

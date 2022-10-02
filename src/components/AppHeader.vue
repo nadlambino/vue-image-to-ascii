@@ -1,12 +1,16 @@
 <script lang="ts" setup>
     import { useSettingStore } from '@/stores/settings';
-    import { ref, watch } from 'vue';
+    import { onMounted, ref, watch } from 'vue';
+    import { ColorPicker } from 'vue-color-kit'
+    import 'vue-color-kit/dist/vue-color-kit.css'
 
     const settingStore = useSettingStore();
     const showImageToggle = ref(settingStore.imageVisibility);
     const showAsciiToggle = ref(settingStore.asciiVisibility);
     const fontSize = ref(settingStore.fontSize);
     const lineHeight = ref(settingStore.lineHeight);
+    const isFontColorSwatchVisible = ref(false);
+    const isBackgroundColorSwatchVisible = ref(false);
 
     watch(showImageToggle, () => {
         settingStore.setImageVisibility(showImageToggle.value)
@@ -24,6 +28,17 @@
         settingStore.setLineHeight(lineHeight.value);
     });
 
+    onMounted(() => {
+        document.addEventListener('click', (e : any) => {
+            e.stopPropagation();
+            const box : any = document.getElementById('header');
+            if (!box.contains(e.target)) {
+                isBackgroundColorSwatchVisible.value = false;
+                isFontColorSwatchVisible.value = false;
+            }
+        })
+    });
+
     const openFileSelector = () => {
         settingStore.setOpenFileSelector(true);
     }
@@ -31,15 +46,63 @@
     const saveImage = () => {
         settingStore.setSaveImage(true);
     }
+
+    const toggleFontColorSwatch = () => {
+        isBackgroundColorSwatchVisible.value = false;
+        isFontColorSwatchVisible.value = !isFontColorSwatchVisible.value;
+    }
+
+    const toggleBackgroundColorSwatch = () => {
+        isFontColorSwatchVisible.value = false;
+        isBackgroundColorSwatchVisible.value = !isBackgroundColorSwatchVisible.value;
+    }
+
+    const changeFontColor = (color : any) => {
+        const { r, g, b, a } = color.rgba;
+        settingStore.setFontColor(`rgba(${r}, ${g}, ${b}, ${a})`);
+    }
+
+    const changeBackgroundColor = (color : any) => {
+        const { r, g, b, a } = color.rgba;
+        settingStore.setBackgroundColor(`rgba(${r}, ${g}, ${b}, ${a})`);
+    }
 </script>
 
 <template>
-    <header>
+    <header id="header">
         <div class="menu-item">
             <button type="button" class="button" @click="openFileSelector">Select</button>
         </div>
         <div class="menu-item">
             <button type="button" class="button" @click="saveImage">Save</button>
+        </div>
+        <div class="menu-item">
+            <small>Font</small>
+            <button type="button" class="swatch-button" @click="toggleFontColorSwatch" 
+                :style="{backgroundColor: settingStore.fontColor}">
+            </button>
+            <ColorPicker
+                class="font-color-picker"
+                v-show="isFontColorSwatchVisible"
+                theme="light"
+                :color="settingStore.fontColor"
+                :colors-default="settingStore.colors"
+                @changeColor="changeFontColor"
+            />
+        </div>
+        <div class="menu-item">
+            <small>Background</small>
+            <button type="button" class="swatch-button" @click="toggleBackgroundColorSwatch" 
+                :style="{backgroundColor: settingStore.backgroundColor}">
+            </button>
+            <ColorPicker
+                class="font-color-picker"
+                v-show="isBackgroundColorSwatchVisible"
+                theme="light"
+                :color="settingStore.backgroundColor"
+                :colors-default="settingStore.colors"
+                @changeColor="changeBackgroundColor"
+            />
         </div>
         <div class="menu-item">
             <small>Image</small>
@@ -67,12 +130,22 @@
 </template>
 
 <style scoped>
+.font-color-picker {
+    position: absolute;
+    top: 70px;
+    min-width: 217px;
+}
+.swatch-button {
+    width: 21px;
+    height: 21px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+}
 header {
     display: flex;
     gap: 15px;
     justify-content: center;
     align-items: flex-end;
-    height: 70px;
     padding: 10px;
     border-bottom: 1px solid #dddddd;
     margin-bottom: 10px;
@@ -85,18 +158,19 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center;
     align-items: center;
     gap: 8px;
     color: #5e5e5e;
-    position: relative;
+    width: 50px;
 }
 small {
     text-transform: uppercase;
     font-size: 10px;
 }
 .input {
-    height: 20px;
-    border: 1px solid #929292;
+    height: 21px;
+    border: 1px solid #dddddd;
     border-radius: 3px;
     width: 50px;
     padding: 5px;
@@ -121,10 +195,10 @@ small {
     right: 0;
     bottom: 0;
     border-radius: 3px;
-    background-color: #a7a7a7;
+    background-color: #dddddd;
     -webkit-transition: .4s;
     transition: .4s;
-    border: 1px solid #929292;
+    border: 1px solid #dddddd;
 }
 .slider:before {
     position: absolute;
@@ -157,5 +231,9 @@ input.toggle:checked + .slider:before {
     padding: 2px 6px;
     border-radius: 3px;
     width: 55px;
+    height: 21px;
+}
+input, button {
+    cursor: pointer;
 }
 </style>

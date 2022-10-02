@@ -35,7 +35,7 @@
 
         html2canvas(preview.value).then(function(previewCanvas) {
             const link = document.createElement("a");
-            link.download = fileStore.file ? `${fileStore.file['name']}-ASCII` : `${(new Date()).toISOString()}-ASCII`;
+            link.download = fileStore.file ? `ASCII-${fileStore.file['name']}` : `ASCII-${(new Date()).toISOString()}.png`;
             link.href = previewCanvas.toDataURL();
             link.click();
         });
@@ -148,7 +148,7 @@
 
 <template>
     <div class="preview-container">
-        <pre ref="preview" v-show="settingStore.asciiVisibility" :style="settingStore.getStyles"></pre>
+        <pre ref="preview" id="preview" v-show="settingStore.asciiVisibility" :style="settingStore.getStyles"></pre>
         <canvas ref="canvas" v-show="settingStore.imageVisibility" :style="canvasStyle"></canvas>
     </div>
 </template>

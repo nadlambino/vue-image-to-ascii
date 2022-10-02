@@ -11,7 +11,8 @@
   "dependencies": {
     "html2canvas": "^1.4.1",
     "pinia": "^2.0.21",
-    "vue": "^3.2.38"
+    "vue": "^3.2.38",
+    "vue-color-kit": "^1.0.5"
   },
   "devDependencies": {
     "@types/node": "^16.11.56",

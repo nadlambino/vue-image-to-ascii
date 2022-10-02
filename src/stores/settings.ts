@@ -11,6 +11,26 @@ export const useSettingStore = defineStore('settings', () => {
     const lineHeight = ref(1.0);
     const openFileSelector = ref(false);
     const saveImage = ref(false);
+    const fontColor = ref('#000000');
+    const backgroundColor = ref('#ffffff');
+    const colors = ref([
+        '#000000', 
+        '#FFFFFF', 
+        '#FF1900', 
+        '#F47365', 
+        '#FFB243', 
+        '#FFE623', 
+        '#6EFF2A', 
+        '#1BC7B1', 
+        '#00BEFF', 
+        '#2E81FF', 
+        '#5D61FF', 
+        '#FF89CF', 
+        '#FC3CAD', 
+        '#BF3DCE', 
+        '#8E00A7', 
+        'rgba(0,0,0,0)'
+    ])
 
     const setDropzoneVisibility = (value: boolean) => {
         dropzoneVisibility.value = value;
@@ -40,10 +60,20 @@ export const useSettingStore = defineStore('settings', () => {
         saveImage.value = value;
     }
 
+    const setFontColor = (value: string) => {
+        fontColor.value = value;
+    }
+
+    const setBackgroundColor = (value: string) => {
+        backgroundColor.value = value;
+    }
+
     const getStyles = computed(() => {
         return {
-            'font-size'     : `${fontSize.value}px`,
-            'line-height'   : `${lineHeight.value}`
+            'font-size'         : `${fontSize.value}px`,
+            'line-height'       : `${lineHeight.value}`,
+            'color'             : fontColor.value,
+            'background-color'  : imageVisibility.value === true ? 'transparent' : backgroundColor.value
         }
     });
 
@@ -57,6 +87,9 @@ export const useSettingStore = defineStore('settings', () => {
         lineHeight,
         openFileSelector,
         saveImage,
+        fontColor,
+        backgroundColor,
+        colors,
         setDropzoneVisibility, 
         setImageVisibility,
         setAsciiVisibility,
@@ -64,6 +97,8 @@ export const useSettingStore = defineStore('settings', () => {
         setLineHeight,
         setOpenFileSelector,
         setSaveImage,
+        setFontColor,
+        setBackgroundColor,
         getStyles
     }
 })
