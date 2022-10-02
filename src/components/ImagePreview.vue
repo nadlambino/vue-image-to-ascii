@@ -29,7 +29,7 @@
     });
 
     const saveImage = () => {
-        if (settingStore.saveImage === false) {
+        if (settingStore.saveImage === false || fileStore.file === null) {
             return;
         }
 
