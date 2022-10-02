@@ -23,13 +23,23 @@
     watch(lineHeight, () => {
         settingStore.setLineHeight(lineHeight.value);
     });
+
+    const openFileSelector = () => {
+        settingStore.setOpenFileSelector(true);
+    }
+
+    const saveImage = () => {
+        settingStore.setSaveImage(true);
+    }
 </script>
 
 <template>
     <header>
         <div class="menu-item">
-            <small>Choose Image</small>
-            <button type="button" class="button" @click="settingStore.setOpenFileSelector(true)">Select File</button>
+            <button type="button" class="button" @click="openFileSelector">Select</button>
+        </div>
+        <div class="menu-item">
+            <button type="button" class="button" @click="saveImage">Save</button>
         </div>
         <div class="menu-item">
             <small>Image</small>
@@ -59,9 +69,9 @@
 <style scoped>
 header {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     height: 70px;
     padding: 10px;
     border-bottom: 1px solid #dddddd;
@@ -76,7 +86,7 @@ header {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     color: #5e5e5e;
     position: relative;
 }
@@ -146,5 +156,6 @@ input.toggle:checked + .slider:before {
     color: #fff;
     padding: 2px 6px;
     border-radius: 3px;
+    width: 55px;
 }
 </style>

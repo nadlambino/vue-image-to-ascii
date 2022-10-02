@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { ref, watch, onMounted } from 'vue';
+    import html2canvas from 'html2canvas';
     import { useFileStore } from './../stores/file';
     import { useSettingStore } from './../stores/settings';
 
@@ -23,7 +24,24 @@
             width: `${preview.value.offsetWidth}px`,
             height: `${preview.value.offsetHeight}px`,
         }
-    })
+
+        saveImage();
+    });
+
+    const saveImage = () => {
+        if (settingStore.saveImage === false) {
+            return;
+        }
+
+        html2canvas(preview.value).then(function(previewCanvas) {
+            const link = document.createElement("a");
+            link.download = fileStore.file ? `${fileStore.file['name']}-ASCII` : `${(new Date()).toISOString()}-ASCII`;
+            link.href = previewCanvas.toDataURL();
+            link.click();
+        });
+
+        settingStore.setSaveImage(false);
+    }
 
     const readSelectedFile = () => {
         const file = fileStore.file;
